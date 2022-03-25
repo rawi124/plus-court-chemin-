@@ -13,7 +13,9 @@ def median(l):
     return l[half]
 
 def bordure_matrice(matrice):
-    """ methode qui definit une valeur par defaut -1 pour la bordure """
+    """
+    methode qui definit une valeur par defaut -1 pour la bordure
+    """
     size = len(matrice)
     for i in range(size):
         matrice[0][i] = matrice[size - 1][i] = AUCUN
@@ -22,7 +24,8 @@ def bordure_matrice(matrice):
 
 def arith_matrice(val_max, size):
     """ une methode qui calcule la moyenne arith entiere pour chaque
-        valeur de la self.mat """
+        valeur de la self.mat
+    """
     i, n, moyenne = 1, 1, 0
     matrice = np.random.randint(val_max, size=(size, size))
     matrice = bordure_matrice(matrice)

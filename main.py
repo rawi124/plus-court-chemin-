@@ -19,6 +19,13 @@ if __name__ == "__main__" :
     #matrice.afficher_matrice()
     fnt.affichage(C, matrice.mat, 30) 
     C.pack(padx=5, pady=5)
+    def Couleur(event):
+        """pour faire l affichage du nom de la couleur dans le label
+        """
+        id = C.find_withtag("current")
+        print(C.gettags(id)[1])
+    
+    C.tag_bind("clic", "<1>", Couleur)
     root.mainloop()
     
 exit(0)
