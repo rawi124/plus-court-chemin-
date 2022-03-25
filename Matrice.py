@@ -3,7 +3,7 @@ import tkinter as tk
 import math
 import numpy as np
 
-import fonction as fct
+import traitement_matrice as fct
 
 AUCUN = -1  # aucun chemin possible
 
