@@ -30,7 +30,7 @@ def arith_matrice(val_max, size):
     matrice = np.random.randint(val_max, size=(size, size))
     matrice = bordure_matrice(matrice)
     copie = np.zeros((size, size))
-    copie = bordure_matrice(matrice)
+    copie = bordure_matrice(copie)
     l = []
     while i < (size - 1):
         j = 1
@@ -57,6 +57,7 @@ def arith_matrice(val_max, size):
             moyenne = 0
             j = j +1
         i = i+ 1
+    print(copie, matrice)
     return copie
 
 

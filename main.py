@@ -16,7 +16,6 @@ if __name__ == "__main__" :
     cadre = tk.Frame(ftopl,width="50m",height="40m",borderwidth=2)#creation d une frame
     cadre.pack(fill="x")
     matrice = m.Matrice(30, 100)
-    #matrice.afficher_matrice()
     fnt.affichage(C, matrice.mat, 30) 
     C.pack(padx=5, pady=5)
     def Couleur(event):
