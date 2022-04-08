@@ -35,4 +35,3 @@ class Matrice:
             for elem in line:
                 print("{0:4}".format(elem), end=" ")
             print()
-            

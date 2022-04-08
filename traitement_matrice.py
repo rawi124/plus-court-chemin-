@@ -20,7 +20,7 @@ def bordure_matrice(matrice):
     for i in range(size):
         matrice[0][i] = matrice[size - 1][i] = AUCUN
         matrice[i][0] = matrice[i][size - 1] = AUCUN
-    return matrice 
+    return matrice
 
 def arith_matrice(val_max, size):
     """ une methode qui calcule la moyenne arith entiere pour chaque
@@ -57,10 +57,5 @@ def arith_matrice(val_max, size):
             moyenne = 0
             j = j +1
         i = i+ 1
-    print(copie, matrice)
+    #print(copie, matrice)
     return copie
-
-
-
-
-    
