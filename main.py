@@ -2,8 +2,8 @@
 import tkinter as tk
 import sys, time, numpy
 import Matrice as m
-import fenetre as fnt
-import dijkstra as dj
+import affichage as aff
+
 
 
 if __name__ == "__main__" :
@@ -18,23 +18,20 @@ if __name__ == "__main__" :
     cadre.pack(fill="x")
     matrice = m.Matrice(30, 100)
     C.pack(padx=5, pady=5)
-    fnt.affichage(C, matrice.mat, 30, 100)
+    aff.affichage_matrice_couleur(C, matrice.mat, 30, 100)
     l_cord = []
+    
     def chemin(event):
         """pour faire l affichage du chemin sur la matrice
         """
         global l_cord
         id = C.find_withtag("current")
         tmp = (C.gettags(id)[1]).split(' ')
-        x = (int(tmp[0]), int(tmp[1]))
-        l_cord.append(x)
-        if len(l_cord) == 2:
-            s = dj.dijkstra(matrice.mat, l_cord[0], l_cord[1], 30)
-            for el in s :
-                matrice.mat[el[0]][el[1]] = 1500
-        fnt.affichage(C, matrice.mat, 30, 100)
-    C.tag_bind("clic", "<1>", chemin)
+        l_cord.append((int(tmp[0]), int(tmp[1])))
+        if len(l_cord) == 2 :
+            aff.afficher_dijkstra(l_cord, matrice.mat, C)
 
+    C.tag_bind("clic", "<1>", chemin)
     root.mainloop()
 
 exit(0)

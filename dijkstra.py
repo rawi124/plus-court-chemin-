@@ -120,10 +120,13 @@ def dijkstra(matrice, depart, arrive, size):
         for sj in succ :
             relacher(sj, si, matrice, T, dist)
     #print('application de dijkstra a partir du sommet de depart ',depart,'pour la matrice ','\n\n',matrice,'\n\n','est ',T)
-    chemin = [arrive]
+    chemin = []
+    chemin.append(arrive[0])
+    chemin.append(arrive[1])
     while arrive != depart :
         arrive = predecessuer(T, arrive)
-        chemin.append(arrive)
+        chemin.append(arrive[0])
+        chemin.append(arrive[1])
     return chemin
 
 def predecessuer(T, point):
