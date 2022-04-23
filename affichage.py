@@ -5,6 +5,7 @@ import math
 
 import dijkstra as dj
 import bezier as bz
+import astar as ast
 
 def affichage_matrice_couleur(canv, matrice, n, val_max):
     """
@@ -49,18 +50,38 @@ def afficher_dijkstra(l_cord, matrice, canv):
     affiche sur la matrice du canva le chemin de bezier avec
     la courbe de bezier
     """
-    s = dj.dijkstra(matrice, l_cord[0], l_cord[1], 30)
-    s = [i*20 for i in s]#pour faire une sorte de projection 
-    s.reverse()
+    
+    dij = dj.dijkstra(matrice, l_cord[0], l_cord[1], 30)
+    dij = [i*20 for i in dij]#pour faire une sorte de projection 
+    dij.reverse()
     i = 0
-    n = len(s)
+    n = len(dij)
     while i+2 < n :
-        canv.create_oval(s[i], s[i+1], s[i]+7, s[i+1]+7 , fill="aqua")
+        canv.create_oval(dij[i], dij[i+1], dij[i]+5, dij[i+1]+5 , fill="aqua")
         i += 2
-    canv.create_oval(s[n-2], s[n-1], s[n-2]+7, s[n-1]+7 , fill="aqua")
+    canv.create_oval(dij[n-2], dij[n-1], dij[n-2]+5, dij[n-1]+5 , fill="aqua")
     #pour ajouter le dernier point si le nombre de point est impair
-    if len(s) > 8 :
-        bz.bezier_chemin(s, 250, canv)
+    if len(dij) > 8 :
+        bz.bezier_chemin(dij, 250, canv, "seagreen")
+
+
+def afficher_astar(l_cord, matrice, canv):
+    """
+    affiche sur la matrice du canva le chemin en suivant astar avec
+    la courbe de bezier
+    """
+    astr = ast.astar(matrice, l_cord[0], l_cord[1], 30)
+    astr = [i*20 for i in astr]#pour faire une sorte de projection 
+    astr.reverse()
+    i = 0
+    n = len(astr)
+    while i+2 < n :
+        canv.create_oval(astr[i], astr[i+1], astr[i]+5, astr[i+1]+5 , fill="darkred")
+        i += 2
+    canv.create_oval(astr[n-2], astr[n-1], astr[n-2]+5, astr[n-1]+5 , fill="darkred")
+    #pour ajouter le dernier point si le nombre de point est impair
+    if len(astr) > 8 :
+        bz.bezier_chemin(astr, 250, canv,"red")
 
 
 

@@ -47,7 +47,7 @@ def equation_X_Y(xa, ya, xb, yb, xc, yc, xd, yd, t):
     B3_3 = t**3
     return B3_0 *xa + B3_1 *xb + B3_2*xc + B3_3*xd, B3_0 *ya + B3_1 *yb + B3_2*yc + B3_3*yd
 
-def courbe_Bezier_Bernstein(xA, yA, xB, yB, xC, yC, xD, yD , N, canva):
+def courbe_Bezier_Bernstein(xA, yA, xB, yB, xC, yC, xD, yD , N, canva, couleur):
     """
     prend en entree une liste contenant les coordonées des 4 points de la courbe de bezier
     et N ( nombre de points d’interpolation) et dessine la courbe correspondante avec la methode
@@ -58,11 +58,11 @@ def courbe_Bezier_Bernstein(xA, yA, xB, yB, xC, yC, xD, yD , N, canva):
 
     while (t < 1):
         pt = equation_X_Y(xA, yA, xB, yB, xC, yC, xD, yD, t)
-        point(pt[0], pt[1], "darkslategrey", canva)
+        point(pt[0], pt[1], couleur, canva)
         t = t + pas
 
 
-def bezier_chemin(lis, N, canva):
+def bezier_chemin(lis, N, canva, couleur):
     """
     dessine la courbe de bezier qui passe par tous les points de la liste en parametre
     tout en respectant la C1 continuité 
@@ -70,15 +70,29 @@ def bezier_chemin(lis, N, canva):
 
     i = 0
     n = len(lis)
-    while i+8 <  n:
+    while i+8 <=  n:
         #a chaque tour de boucle on prend 8 valeurs de la liste qui representent respectivement x0, y0, ...., x7, y7
         #on incremente i de 6 pour assurer la C0 contuinuité
-        courbe_Bezier_Bernstein(lis[i]+4, lis[i+1]+4, lis[i+2]+4, lis[i+3]+4, lis[i+4]+4, lis[i+5]+4, lis[i+6]+4, lis[i+7]+4 , N, canva)
+        courbe_Bezier_Bernstein(lis[i]+4, lis[i+1]+4, lis[i+2]+4, lis[i+3]+4, lis[i+4]+4, lis[i+5]+4, lis[i+6]+4, lis[i+7]+4 , N, canva, couleur)
+
         i+= 6
-    courbe_Bezier_Bernstein(lis[n-8]+4, lis[n-7]+4, lis[n-6]+4, lis[n-5]+4, lis[n-4]+4, lis[n-3]+4, lis[n-2]+4, lis[n-1]+4 , N, canva)
+    """    
+    if n-i == 2 :
+        print("un seul point qui reste car n-i = ",n-i, " avec n et i ",n,i)
+        courbe_Bezier_Bernstein( lis[n-6]+4, lis[n-5]+4, lis[n-6]+4, lis[n-5]+4, lis[n-4]+4, lis[n-3]+4, lis[n-2]+4, lis[n-1]+4 , N, canva, couleur)
+
+    if n-i == 4 :
+        print("deux points restent car n-i = ",n-i, " avec n et i ",n,i)
+        courbe_Bezier_Bernstein(lis[n-4]+4, lis[n-3]+4, lis[n-4]+4, lis[n-3]+4, lis[n-4]+4, lis[n-3]+4, lis[n-2]+4, lis[n-1]+4 , N, canva, couleur)
+
+    if n-i == 6 :
+        print("trois points qui restent car n-i = ",n-i, " avec n et i ",n,i)
+        courbe_Bezier_Bernstein(lis[n-2]+4, lis[n-1]+4,  lis[n-2]+4, lis[n-1]+4,  lis[n-2]+4, lis[n-1]+4, lis[n-2]+4, lis[n-1]+4 , N, canva, couleur)
+    else:
+        courbe_Bezier_Bernstein(lis[n-8]+4, lis[n-7]+4, lis[n-6]+4, lis[n-5]+4, lis[n-4]+4, lis[n-3]+4, lis[n-2]+4, lis[n-1]+4 , N, canva, couleur)
+"""
+    courbe_Bezier_Bernstein(lis[n-8]+4, lis[n-7]+4, lis[n-6]+4, lis[n-5]+4, lis[n-4]+4, lis[n-3]+4, lis[n-2]+4, lis[n-1]+4 , N, canva, couleur)
 
     
-
-        
         
 

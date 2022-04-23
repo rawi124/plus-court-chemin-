@@ -1,5 +1,5 @@
 import numpy as np
-import math
+import math as math
 
 import traitement_matrice as ttt_mat
 
@@ -33,7 +33,7 @@ def voisin(matrice, point, size):
         val.append((i+1, j))
     return val
 
-def cout(sj, si, matrice):
+def cout_dist(sj, si, matrice):
     """
     pour un voisin sj de si, si sj se trouve sur la diagonale de si
     alors le cout de sj devient egale a sj*racine_carré de 2
@@ -45,89 +45,72 @@ def cout(sj, si, matrice):
         return matrice[x_j][y_j]*math.sqrt(2)
     else :
         return matrice[x_j][y_j]
-    
 
-def relacher(sj, si, matrice, T, dist):
-    """
-    effectue le relachement des sommets
-    """
-    x_j, y_j = sj[0], sj[1]
-    x_i, y_i = si[0], si[1]
-    
-    cout_sj = cout(sj, si, matrice)
-    
-    dist_sj, dist_si = dist[x_j][y_j], dist[x_i][y_i]
-    if dist_sj > (dist_si + cout_sj):
-        dist[x_j][y_j] = dist_si + cout_sj
-        T[x_j][y_j] = si
 
-def dijkstra(matrice, depart, arrive, size):
+
+def distance(x, y, x1, y1):
+    """
+    calcule la distance estimée entre deux points de coordonnees respectives
+    x,y et x1,y1
+    ===> c est l heurestique des distances
+    """
+    return math.sqrt((x-x1)*(x-x1) + (y-y1)*(y-y1));
+ 
+def astar(matrice, depart, arrive, size):
 
     """
     prend matrice en entree, un point de depart et un autre d arrivÃ©e
     et retourne une liste qui contient les corrdonnes du plus court chemin
     en suivant l'algorithme de dijkstra
     """
-
-
+ 
     #partie des initialisations
-    d = [[infini]*size]*size
-    dist = ttt_mat.bordure_matrice(np.array(d)) #liste des distances de chaque sommet init a +inf
-    dist[depart[0]][depart[1]] = 0
+    d = [[0]*size]*size
+    cout = ttt_mat.bordure_matrice(np.array(d)) #liste des distances de chaque sommet init a +inf
     #print('au depart l ensemble dist est initilisé ainsi \n',dist,'\n')
 
-
+    open_list = set()#open_list
+    closed_list = set()#closed_list
+    
+    open_list.add((depart[0], depart[1]))#ajouter le point de depart a open_list
+    
+    u = depart
+    
     t = [[(0, 0) ]*size]*size
     T = ttt_mat.bordure_matrice(np.array(t))
-    #print('au depart l ensemble T est initilisé ainsi \n',T,'\n')
     
-    F = set()
-    cpt = 0
-    i = 0
-    j = 0
-    while cpt < (size)* (size) :
-        F.add((i, j))
-        j+= 1
-        if j == size  :
-            i += 1
-            j = 0
-        cpt += 1
-        
-    #print('au depart l ensemble F est initialisé ainsi \n',F,'\n')
-    
-    si = depart
-    t = []
-
-    longeur = size*size - (size-2)*(size-2)
-    #print('la longeur est ', longeur)
-    while len(F) > longeur :
+    while open_list :
         mini = infini
-        #recherche dans F si tq dist[si] soit minimale 
-        for el in F :
-            if dist[el[0]][el[1]] < mini and dist[el[0]][el[1]] != AUCUN:
-                mini = dist[el[0]][el[1]]
-                si = el
-            
-        #print('le sommet courant qu on traite c est ',si)
-        
-        F.discard(si)#supprime le sommet min de F
-        #print('maintenant F est' , F)
-        
-        succ = voisin(matrice, si, size)
-        #print('les voisins de mon sommet courant ',si,' sont ', succ)
+        #recherche dans open_list u tq cout u soit minimale
+        #car la liste open_list est consideree une FilePrioritaire
+        for el in open_list :
+            if cout[el[0]][el[1]] < mini and cout[el[0]][el[1]] != AUCUN:
+                mini = cout[el[0]][el[1]]
+                u = el        
+        open_list.discard(u)#supprime le sommet min de open_list
+                            #equivalent a faire open_list.defiler()
+        if u == arrive :
+            chemin = []
+            chemin.append(arrive[0])
+            chemin.append(arrive[1])
+            while arrive != depart :
+                arrive = predecessuer(T, arrive)
+                chemin.append(arrive[0])
+                chemin.append(arrive[1])
+            return chemin
+        succ = voisin(matrice, u, size)
 
-        #Relacher
-        for sj in succ :
-            relacher(sj, si, matrice, T, dist)
+        #pour chaque voisin v de u dans G 
+        for v in succ :
+            cout_tmp = cout[u[0]][u[1]] + cout_dist(u, v, matrice)
+            if not (v in closed_list or (v in open_list and cout_tmp > cout[v[0]][v[1]])):
+                cout[v[0]][v[1]] = cout[u[0]][u[1]] + cout_dist(u, v, matrice) + distance(v[0], v[1], arrive[0], arrive[1])
+                T[v[0]][v[1]] = u
+                open_list.add(v)
+        closed_list.add(u)
     #print('application de dijkstra a partir du sommet de depart ',depart,'pour la matrice ','\n\n',matrice,'\n\n','est ',T)
-    chemin = []
-    chemin.append(arrive[0])
-    chemin.append(arrive[1])
-    while arrive != depart :
-        arrive = predecessuer(T, arrive)
-        chemin.append(arrive[0])
-        chemin.append(arrive[1])
-    return chemin
+   
+    return False
 
 def predecessuer(T, point):
     """
@@ -148,7 +131,6 @@ def predecessuer(T, point):
             w += 1
         z += 1
     
-
 
 
 
