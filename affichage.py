@@ -21,23 +21,18 @@ def affichage_matrice_couleur(canv, matrice, n, val_max):
         i = 0
         while(i < 20*n):
             if matrice[x][p] == -1 or matrice[x][p] == 1e6 :
-                couleur ="white"
-                canv.create_rectangle(i,j,i+20,j+20,fill=couleur, outline="", tags=(("clic",(x, p))))
+                couleur ="red"
             elif matrice[x][p] <= val_max/4 :
                 couleur = '#BBBF95'
-                canv.create_rectangle(i,j,i+20,j+20,fill=couleur, outline="", tags=(("clic",(x, p))))
             elif matrice[x][p] > val_max/4 and matrice[x][p] < val_max*3.5/10:
                 couleur = '#0486DB'
-                canv.create_rectangle(i,j,i+20,j+20,fill=couleur, outline="", tags=(("clic",(x, p))))
             elif matrice[x][p] >= val_max*3.5/10 and matrice[x][p] < val_max/2:
                 couleur = '#05ACD3'
-                canv.create_rectangle(i,j,i+20,j+20,fill=couleur, outline="", tags=(("clic",(x, p))))
             elif matrice[x][p] >= val_max/2 and matrice[x][p] < val_max*2/3 :
                 couleur = '#012172'
-                canv.create_rectangle(i,j,i+20,j+20,fill=couleur, outline="", tags=(("clic",(x, p))))
             elif matrice[x][p] >= val_max*2/3 and matrice[x][p] < val_max :
                 couleur = '#1F1641'
-                canv.create_rectangle(i,j,i+20,j+20,fill=couleur, outline="", tags=(("clic",(x, p))))
+            canv.create_rectangle(i,j,i+20,j+20,fill=couleur, outline="", tags=(("clic",(x, p))))
             p = p + 1
             i = i + 20
         p = 0
@@ -62,7 +57,7 @@ def afficher_dijkstra(l_cord, matrice, canv):
     canv.create_oval(dij[n-2], dij[n-1], dij[n-2]+5, dij[n-1]+5 , fill="aqua")
     #pour ajouter le dernier point si le nombre de point est impair
     if len(dij) > 8 :
-        bz.bezier_chemin(dij, 250, canv, "seagreen")
+        bz.bezier_chemin(dij, 250, canv, "yellow")
 
 
 def afficher_astar(l_cord, matrice, canv):
@@ -76,9 +71,9 @@ def afficher_astar(l_cord, matrice, canv):
     i = 0
     n = len(astr)
     while i+2 < n :
-        canv.create_oval(astr[i], astr[i+1], astr[i]+5, astr[i+1]+5 , fill="darkred")
+        canv.create_oval(astr[i], astr[i+1], astr[i]+5, astr[i+1]+5 , fill="rosybrown")
         i += 2
-    canv.create_oval(astr[n-2], astr[n-1], astr[n-2]+5, astr[n-1]+5 , fill="darkred")
+    canv.create_oval(astr[n-2], astr[n-1], astr[n-2]+5, astr[n-1]+5 , fill="rosybrown")
     #pour ajouter le dernier point si le nombre de point est impair
     if len(astr) > 8 :
-        bz.bezier_chemin(astr, 250, canv,"red")
+        bz.bezier_chemin(astr, 250, canv,"brown")

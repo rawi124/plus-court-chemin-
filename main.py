@@ -15,7 +15,7 @@ if __name__ == "__main__" :
 
     fram =  tk.Frame(ftopl,width="150m",height="100m",borderwidth=4)#creation d une frame
     cadre2 = tk.Frame(ftopl)#creation d une deuxieme frame
-    lab = tk.Label(cadre2,text="pour afficher un chemin appuyez sur deux endroits # de la matrice, Red : A*, Green : dijkstra")#creation d un label
+    lab = tk.Label(cadre2,text="pour afficher un chemin appuyez sur deux endroits # de la matrice, A* : brown, dijkstra : yellow")#creation d un label
 
     lab.pack(side="left")
     cadre2.pack()
@@ -40,7 +40,7 @@ if __name__ == "__main__" :
             l_cord.append((int(tmp[0]), int(tmp[1])))
         if len(l_cord) == 2  :
             aff.afficher_dijkstra(l_cord, matrice.mat, C)
-            #aff.afficher_astar(l_cord, matrice.mat, C)
+            aff.afficher_astar(l_cord, matrice.mat, C)
             l_cord = []
 
     C.tag_bind("clic", "<1>", chemin)

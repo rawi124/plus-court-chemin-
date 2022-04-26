@@ -32,7 +32,6 @@ def bezier_Algo(xA, yA, xB, yB, xC, yC, xD, yD , N, canva):
 
     while (t < 1):
         pt = barycentre(xA, yA, xB, yB, xC, yC, xD, yD, t)
-        print(pt)
         point(pt[0], pt[1], "black", canva)
         t = t + pas
 
@@ -76,22 +75,11 @@ def bezier_chemin(lis, N, canva, couleur):
         courbe_Bezier_Bernstein(lis[i]+4, lis[i+1]+4, lis[i+2]+4, lis[i+3]+4, lis[i+4]+4, lis[i+5]+4, lis[i+6]+4, lis[i+7]+4 , N, canva, couleur)
 
         i+= 6
-    """    
-    if n-i == 2 :
-        print("un seul point qui reste car n-i = ",n-i, " avec n et i ",n,i)
-        courbe_Bezier_Bernstein( lis[n-6]+4, lis[n-5]+4, lis[n-6]+4, lis[n-5]+4, lis[n-4]+4, lis[n-3]+4, lis[n-2]+4, lis[n-1]+4 , N, canva, couleur)
+    while i+2 < n :
+        canva.create_line(lis[i]+4, lis[i+1]+4, lis[i+2]+4, lis[i+3], fill=couleur)
+        i += 2
 
-    if n-i == 4 :
-        print("deux points restent car n-i = ",n-i, " avec n et i ",n,i)
-        courbe_Bezier_Bernstein(lis[n-4]+4, lis[n-3]+4, lis[n-4]+4, lis[n-3]+4, lis[n-4]+4, lis[n-3]+4, lis[n-2]+4, lis[n-1]+4 , N, canva, couleur)
-
-    if n-i == 6 :
-        print("trois points qui restent car n-i = ",n-i, " avec n et i ",n,i)
-        courbe_Bezier_Bernstein(lis[n-2]+4, lis[n-1]+4,  lis[n-2]+4, lis[n-1]+4,  lis[n-2]+4, lis[n-1]+4, lis[n-2]+4, lis[n-1]+4 , N, canva, couleur)
-    else:
-        courbe_Bezier_Bernstein(lis[n-8]+4, lis[n-7]+4, lis[n-6]+4, lis[n-5]+4, lis[n-4]+4, lis[n-3]+4, lis[n-2]+4, lis[n-1]+4 , N, canva, couleur)
-"""
-    courbe_Bezier_Bernstein(lis[n-8]+4, lis[n-7]+4, lis[n-6]+4, lis[n-5]+4, lis[n-4]+4, lis[n-3]+4, lis[n-2]+4, lis[n-1]+4 , N, canva, couleur)
+        
 
     
         

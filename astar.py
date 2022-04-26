@@ -46,7 +46,16 @@ def cout_dist(sj, si, matrice):
     else :
         return matrice[x_j][y_j]
 
-
+def rechercher_min(F, dist):
+    """
+    rechercher dans F "si" tq dist[si] soir minimale
+    """
+    mini = 1e6 # zone infranchisable
+    for el in F :
+        if dist[el[0]][el[1]] < mini and dist[el[0]][el[1]] != AUCUN:
+            mini = dist[el[0]][el[1]]
+            si = el
+    return si
 
 def distance(x, y, x1, y1):
     """
@@ -56,17 +65,21 @@ def distance(x, y, x1, y1):
     """
     return math.sqrt((x-x1)*(x-x1) + (y-y1)*(y-y1));
     
-def nb_obst(matrice, size):
-    i = 0
-    cpt = 0
-    while i < size :
-        j = 0
-        while j < size :
-            if matrice[i][j] == -1 :
-                cpt +=1
-            j +=1
-        i += 1
-    return cpt
+def remonter(arrive, depart, T):
+    """
+    part du point d arrivee et remonte en suivant les predecesseur jusqu'au
+    point d arrivee
+    """
+    chemin = []
+    chemin.append(arrive[0])
+    chemin.append(arrive[1])
+    while arrive != depart :
+        arrive = predecessuer(T, arrive)
+        chemin.append(arrive[0])
+        chemin.append(arrive[1])
+    return chemin
+
+
 def astar(matrice, depart, arrive, size):
 
     """
@@ -83,32 +96,25 @@ def astar(matrice, depart, arrive, size):
     open_list = set()#open_list
     closed_list = set()#closed_list
 
-    open_list.add((depart[0], depart[1]))#ajouter le point de depart a open_list
+    #ajouter le point de depart a open_list
+    open_list.add((depart[0], depart[1]))
 
     u = depart
 
     t = [[(0, 0) ]*size]*size
+    #T va contenir pour pour un sommet de coordonne (i, j), T[i][j] sera son predecesseur
     T = ttt_mat.bordure_matrice(np.array(t))
 
     while open_list :
-        mini = infini
-        #recherche dans open_list u tq cout u soit minimale
-        #car la liste open_list est consideree une FilePrioritaire
-        for el in open_list :
-            if cout[el[0]][el[1]] < mini and cout[el[0]][el[1]] != AUCUN:
-                mini = cout[el[0]][el[1]]
-                u = el
-        open_list.discard(u)#supprime le sommet min de open_list
-                            #equivalent a faire open_list.defiler()
+        #u le sommet de plus petite distance
+        u = rechercher_min(open_list, cout)
+
+        #supprime le sommet min de open_list
+        #equivalent a faire open_list.defiler()
+        open_list.discard(u)
+                            
         if u == arrive :
-            chemin = []
-            chemin.append(arrive[0])
-            chemin.append(arrive[1])
-            while arrive != depart :
-                arrive = predecessuer(T, arrive)
-                chemin.append(arrive[0])
-                chemin.append(arrive[1])
-            return chemin
+            return remonter(arrive, depart, T)
         succ = voisin(matrice, u, size)
 
         #pour chaque voisin v de u dans G
@@ -119,9 +125,6 @@ def astar(matrice, depart, arrive, size):
                 T[v[0]][v[1]] = u
                 open_list.add(v)
         closed_list.add(u)
-    #print('application de dijkstra a partir du sommet de depart ',depart,'pour la matrice ','\n\n',matrice,'\n\n','est ',T)
-
-    return False
 
 def predecessuer(T, point):
     """

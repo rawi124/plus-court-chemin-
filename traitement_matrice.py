@@ -65,13 +65,17 @@ def ajout_infranchissable(matrice, size):
     """
     ajoute des obstacles a -1 dans la matrice aleatoirement
     """
-    i = 5
+    i = 1
     while i+3 < size :
         x = int(random.randint(1,size-2))
         matrice[i][x] = 1e6
-        matrice[i+1][x] = 1e6
         matrice[i-1][x] = 1e6
         matrice[i][x+1] = 1e6
         matrice[i][x-1] = 1e6
-        i += 3
+        x = int(random.randint(1,size-2))
+        matrice[i][x] = 1e6
+        matrice[i+1][x] = 1e6
+        matrice[i][x+1] = 1e6
+        matrice[i][x-1] = 1e6
+        i += 2
     return matrice
