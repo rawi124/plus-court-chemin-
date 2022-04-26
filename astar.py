@@ -55,7 +55,18 @@ def distance(x, y, x1, y1):
     ===> c est l heurestique des distances
     """
     return math.sqrt((x-x1)*(x-x1) + (y-y1)*(y-y1));
- 
+    
+def nb_obst(matrice, size):
+    i = 0
+    cpt = 0
+    while i < size :
+        j = 0
+        while j < size :
+            if matrice[i][j] == -1 :
+                cpt +=1
+            j +=1
+        i += 1
+    return cpt
 def astar(matrice, depart, arrive, size):
 
     """
@@ -63,7 +74,7 @@ def astar(matrice, depart, arrive, size):
     et retourne une liste qui contient les corrdonnes du plus court chemin
     en suivant l'algorithme de dijkstra
     """
- 
+
     #partie des initialisations
     d = [[0]*size]*size
     cout = ttt_mat.bordure_matrice(np.array(d)) #liste des distances de chaque sommet init a +inf
@@ -71,14 +82,14 @@ def astar(matrice, depart, arrive, size):
 
     open_list = set()#open_list
     closed_list = set()#closed_list
-    
+
     open_list.add((depart[0], depart[1]))#ajouter le point de depart a open_list
-    
+
     u = depart
-    
+
     t = [[(0, 0) ]*size]*size
     T = ttt_mat.bordure_matrice(np.array(t))
-    
+
     while open_list :
         mini = infini
         #recherche dans open_list u tq cout u soit minimale
@@ -86,7 +97,7 @@ def astar(matrice, depart, arrive, size):
         for el in open_list :
             if cout[el[0]][el[1]] < mini and cout[el[0]][el[1]] != AUCUN:
                 mini = cout[el[0]][el[1]]
-                u = el        
+                u = el
         open_list.discard(u)#supprime le sommet min de open_list
                             #equivalent a faire open_list.defiler()
         if u == arrive :
@@ -100,7 +111,7 @@ def astar(matrice, depart, arrive, size):
             return chemin
         succ = voisin(matrice, u, size)
 
-        #pour chaque voisin v de u dans G 
+        #pour chaque voisin v de u dans G
         for v in succ :
             cout_tmp = cout[u[0]][u[1]] + cout_dist(u, v, matrice)
             if not (v in closed_list or (v in open_list and cout_tmp > cout[v[0]][v[1]])):
@@ -109,7 +120,7 @@ def astar(matrice, depart, arrive, size):
                 open_list.add(v)
         closed_list.add(u)
     #print('application de dijkstra a partir du sommet de depart ',depart,'pour la matrice ','\n\n',matrice,'\n\n','est ',T)
-   
+
     return False
 
 def predecessuer(T, point):
@@ -127,24 +138,6 @@ def predecessuer(T, point):
                 #print(T[z][w],' est le predecessur de ', z, w)
                 x = T[z][w]
                 return x[0], x[1]
-                
+
             w += 1
         z += 1
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    

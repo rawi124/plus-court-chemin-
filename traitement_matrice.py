@@ -1,4 +1,5 @@
 import numpy as np
+import random as random
 
 AUCUN = -1
 
@@ -59,3 +60,18 @@ def arith_matrice(val_max, size):
         i = i+ 1
     #print(copie, matrice)
     return copie
+
+def ajout_infranchissable(matrice, size):
+    """
+    ajoute des obstacles a -1 dans la matrice aleatoirement
+    """
+    i = 5
+    while i+3 < size :
+        x = int(random.randint(1,size-2))
+        matrice[i][x] = 1e6
+        matrice[i+1][x] = 1e6
+        matrice[i-1][x] = 1e6
+        matrice[i][x+1] = 1e6
+        matrice[i][x-1] = 1e6
+        i += 3
+    return matrice

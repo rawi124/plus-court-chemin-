@@ -13,6 +13,7 @@ class Matrice:
         """ le constructeur qui initialise une self.mat aleatoire avec une valeur max val_max """
         self.n = n
         self.mat = fct.arith_matrice(val_max, n)
+        self.mat = fct.ajout_infranchissable(self.mat, n)
         #print(self.mat)
         self.val_max = val_max
 

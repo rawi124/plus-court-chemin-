@@ -20,7 +20,7 @@ def affichage_matrice_couleur(canv, matrice, n, val_max):
     while x < n :
         i = 0
         while(i < 20*n):
-            if matrice[x][p] == -1 :
+            if matrice[x][p] == -1 or matrice[x][p] == 1e6 :
                 couleur ="white"
                 canv.create_rectangle(i,j,i+20,j+20,fill=couleur, outline="", tags=(("clic",(x, p))))
             elif matrice[x][p] <= val_max/4 :
@@ -50,9 +50,9 @@ def afficher_dijkstra(l_cord, matrice, canv):
     affiche sur la matrice du canva le chemin de bezier avec
     la courbe de bezier
     """
-    
+
     dij = dj.dijkstra(matrice, l_cord[0], l_cord[1], 30)
-    dij = [i*20 for i in dij]#pour faire une sorte de projection 
+    dij = [i*20 for i in dij]#pour faire une sorte de projection
     dij.reverse()
     i = 0
     n = len(dij)
@@ -71,7 +71,7 @@ def afficher_astar(l_cord, matrice, canv):
     la courbe de bezier
     """
     astr = ast.astar(matrice, l_cord[0], l_cord[1], 30)
-    astr = [i*20 for i in astr]#pour faire une sorte de projection 
+    astr = [i*20 for i in astr]#pour faire une sorte de projection
     astr.reverse()
     i = 0
     n = len(astr)
@@ -82,6 +82,3 @@ def afficher_astar(l_cord, matrice, canv):
     #pour ajouter le dernier point si le nombre de point est impair
     if len(astr) > 8 :
         bz.bezier_chemin(astr, 250, canv,"red")
-
-
-
