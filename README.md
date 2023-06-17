@@ -1,10 +1,7 @@
 # ProjetChemin
-mini projet ecrit en python en utilisant la bibliotheque tkinter qui permet de choisir sur une interface deux points, un de depart et un autre d'arrivé, et ainsi de saisir le plus court chemin 
-selon deux algorithmes : dijikstra et astar, le dessin du chemin sera fait en utilisant l'algorithme bezier.
+Mini projet écrit en Python utilisant la bibliothèque Tkinter, qui permet de choisir deux points sur une interface : un point de départ et un point d'arrivée. Ensuite, l'utilisateur peut saisir le chemin le plus court en utilisant deux algorithmes : Dijkstra et A* (A-Star). Le dessin du chemin sera réalisé en utilisant l'algorithme de Bézier.
 
-sur l'interface, les cases de couleur foncé representent des zones à eviter au maximum, contrairement aux zones claires . les deux algorithmes dijikstra et astar
-prennenet en compte ces contraintes.
-
+Sur l'interface, les cases de couleur foncée représentent des zones à éviter autant que possible. Les zones en rouge correspondent à des cases inaccessibles, contrairement aux zones claires. Les deux algorithmes, Dijkstra et A*, tiennent compte de ces contraintes. La grille sera générée aléatoirement à chaque lancement du programme principal (main).
 
 ## lancement
 pour tester lancer main.py
